@@ -1,5 +1,17 @@
-import { Carousel } from "flowbite-react";
+import {
+  Carousel,
+  Popover,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeadCell,
+  TableRow,
+} from "flowbite-react";
 import "./App.css";
+import { IoMail, IoMenuSharp, IoLocationSharp } from "react-icons/io5";
+import { AiOutlineInstagram } from "react-icons/ai";
+import { FiTwitter } from "react-icons/fi";
 
 function App() {
   const smoothScroll = (targetId: string) => {
@@ -8,13 +20,14 @@ function App() {
       target.scrollIntoView({ behavior: "smooth" });
     }
   };
+
   return (
     <div
-      className={`fixed w-screen h-screen overflow-y-scroll overflow-x-hidden bg-landing-bg-2 bg-cover px-2 md:px-0`}
+      className={`fixed w-screen h-screen overflow-y-scroll overflow-x-hidden bg-landing-bg-1 bg-cover px-2 md:px-0`}
     >
       <div
         id="navbar"
-        className="fixed top-10 left-1/2 px-[20px] transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl bg-white bg-opacity-20 backdrop-blur-sm shadow-md z-50"
+        className="hidden md:block fixed top-10 left-1/2 px-[20px] transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl bg-white bg-opacity-20 backdrop-blur-xl shadow-md z-50"
       >
         <ul className="list-none flex w-full h-full items-center justify-center gap-24 mx-auto text-black">
           <li className="nav-item">
@@ -31,11 +44,23 @@ function App() {
           </li>
           <li className="nav-item">
             <a
-              href="#basvurus"
+              href="#mufredat"
               className="relative font-semibold text-xl font-montserrat"
               onClick={(e) => {
                 e.preventDefault();
-                smoothScroll("mission");
+                smoothScroll("mufredat");
+              }}
+            >
+              Müfredat
+            </a>
+          </li>
+          <li className="nav-item">
+            <a
+              href="#basvuru"
+              className="relative font-semibold text-xl font-montserrat"
+              onClick={(e) => {
+                e.preventDefault();
+                smoothScroll("basvuru");
               }}
             >
               Başvuru
@@ -47,7 +72,7 @@ function App() {
               className="relative font-semibold text-xl font-montserrat"
               onClick={(e) => {
                 e.preventDefault();
-                smoothScroll("mission");
+                smoothScroll("iletisim");
               }}
             >
               İletişim
@@ -55,6 +80,75 @@ function App() {
           </li>
         </ul>
       </div>
+
+      <div
+        id="navbar-mobile"
+        className="md:hidden fixed top-10 left-1/2 px-[20px] transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl z-50"
+      >
+        <div className="flex items-center justify-end w-full h-full px-4">
+          <Popover
+            aria-labelledby="navbar-menu"
+            content={
+              <ul className="list-none  w-full h-full items-center justify-center gap-24 mx-auto text-black">
+                <li className="nav-item">
+                  <a
+                    href="#insan-akademisi"
+                    className="relative font-semibold text-xl font-montserrat"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScroll("insan-akademisi");
+                    }}
+                  >
+                    İnsan Akademisi
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#mufredat"
+                    className="relative font-semibold text-xl font-montserrat"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScroll("mufredat");
+                    }}
+                  >
+                    Müfredat
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#basvuru"
+                    className="relative font-semibold text-xl font-montserrat"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScroll("basvuru");
+                    }}
+                  >
+                    Başvuru
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href="#iletisim"
+                    className="relative font-semibold text-xl font-montserrat"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      smoothScroll("iletisim");
+                    }}
+                  >
+                    İletişim
+                  </a>
+                </li>
+              </ul>
+            }
+            placement="left"
+          >
+            <button className="flex items-center justify-center w-[50px] h-[50px] bg-white rounded-full text-black">
+              <IoMenuSharp className="text-2xl" />
+            </button>
+          </Popover>
+        </div>
+      </div>
+
       <div
         id="landing"
         className="relative w-full max-w-screen-xl h-screen flex flex-col justify-between items-center mx-auto py-12"
@@ -62,15 +156,15 @@ function App() {
         <div></div>
         <div className="grid grid-cols-2 w-full mt-[110px]">
           <div className="hidden md:block">&nbsp;</div>
-          <div className="col-span-2 md:col-span-1 flex flex-col gap-4 bg-white bg-opacity-20 backdrop-blur-sm shadow-md rounded-xl px-8 p-4">
-            <span className="text-3xl text-black font-semibold">
+          <div className="col-span-2 md:col-span-1 flex flex-col gap-4 bg-primary bg-opacity-95 backdrop-blur-sm shadow-md shadow-parimary rounded-xl px-8 p-4">
+            <span className="text-3xl text-secondary font-[700]">
               <span className="relative">
                 Marifet ve Erdem
                 <div className="absolute bottom-2 w-full h-[4px] bg-chesnut -z-10"></div>
               </span>
               <br /> Araştırmaları <br /> Enstitüsü
             </span>
-            <p className="text-lg text-black">
+            <p className="text-lg text-secondary font-[500]">
               Marifet ve Erdem Araştırmaları Enstitüsü (MEAD), insanlığın temel
               varoluşsal, ahlaki ve felsefi sorularını ele alarak, bu konularda
               farkındalık yaratmayı amaçlayan bir eğitim programı sunar. MEAD,
@@ -98,7 +192,7 @@ function App() {
 
       <div
         id="insan-akademisi"
-        className="flex flex-col gap-4 max-w-screen-xl mx-auto pt-36 pb-20"
+        className="flex flex-col gap-12 max-w-screen-xl mx-auto pt-36 pb-20"
       >
         <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="flex items-center justify-center text-4xl text-center text-white text-shadow-xl font-[900]">
@@ -169,7 +263,7 @@ function App() {
             </Carousel>
           </div>
         </div>
-        <div className="flex flex-col space-y-4 w-full rounded-xl bg-white bg-opacity-20 backdrop-blur-sm shadow-md px-8 py-4">
+        <div className="flex flex-col space-y-4 w-full rounded-xl bg-white bg-opacity-40 backdrop-blur-xl text-black font-[500] shadow-md px-8 py-4">
           <p>
             <b>Marifet ve Erdem Araştırmaları Enstitüsü (MEAD)</b> kurulduktan
             sonra böylesi sorulardan hareketle bu programın içeriğini
@@ -202,6 +296,168 @@ function App() {
             yoğunlaşarak öğrencilerini/yolcularını uygulama bilgisi içeren
             derslerle, uygulayıcı kişilerle buluşturmaktadır.
           </p>
+        </div>
+        <h2
+          id="mufredat"
+          className="w-full text-4xl text-center text-white text-shadow-xl font-[900] pt-32"
+        >
+          Derslerimiz
+        </h2>
+        <div className="w-full rounded-xl bg-primary shadow-md overflow-scroll -mt-8">
+          <Table className="w-full text-secondary shadow-none bg-transparent">
+            <TableHead className="bg-secondary text-primary">
+              <TableHeadCell className="bg-transparent">Kademe</TableHeadCell>
+              <TableHeadCell className="bg-transparent">Dönem</TableHeadCell>
+              <TableHeadCell className="bg-transparent">Ders</TableHeadCell>
+              <TableHeadCell className="bg-transparent">Eğitmen</TableHeadCell>
+            </TableHead>
+            <TableBody className="divide-y">
+              <TableRow>
+                <TableCell rowSpan={6}>1. Kademe</TableCell>
+                <TableCell rowSpan={3}>Güz</TableCell>
+                <TableCell>Varlık</TableCell>
+                <TableCell>İhsan Fazlıoğlu</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Birliğin Metafizik Boyutları</TableCell>
+                <TableCell>İbrahim Halil Üçer</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Metafizik Bilginin İmkanı ve Nübüvvet</TableCell>
+                <TableCell>Ömer Türker</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell rowSpan={3}>Bahar</TableCell>
+                <TableCell>İnancın Boyutları</TableCell>
+                <TableCell>Eşref Altaş</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Hayat, Ölüm ve Sonrası</TableCell>
+                <TableCell>Abuzer Dişkaya</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>İyilik ve Kötülük</TableCell>
+                <TableCell>Ferhat Yöney</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell rowSpan={6}>2. Kademe</TableCell>
+                <TableCell rowSpan={3}>Güz</TableCell>
+                <TableCell>İnsanın Fiilleri ve Sorumluluğu</TableCell>
+                <TableCell>Sami Turan Erel</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  Sorumluluğun Zemini, Gayesi ve Fiillerimiz
+                </TableCell>
+                <TableCell>Nail Okuyucu</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Terk ve Gerçekliğe Yöneliş</TableCell>
+                <TableCell>Ahmet Murat Özel</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell rowSpan={3}>Bahar</TableCell>
+                <TableCell>İrade ve İktidar</TableCell>
+                <TableCell>Tahsin Görgün</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Dünya, Özgürlük ve Arzu</TableCell>
+                <TableCell>Ayhan Çitil</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Benin Dünyası</TableCell>
+                <TableCell>Latif Karagöz</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell rowSpan={6}>3. Kademe</TableCell>
+                <TableCell rowSpan={3}>Güz</TableCell>
+                <TableCell>Gerçek Fail ve Benin Eleştirisi</TableCell>
+                <TableCell>Taha Boyalık</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>İyi ve Kötü Geriliminde İrade Direnci</TableCell>
+                <TableCell>Zeynep Şeyma Özkan</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Gerçek Fail ve Nedenselliğin Sonu</TableCell>
+                <TableCell>Ercan Alkan</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell rowSpan={3}>Bahar</TableCell>
+                <TableCell>İlahi Aşk ve Marifer</TableCell>
+                <TableCell>Ahmet Murat Özel</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>
+                  Nasıl Okur ve Yazarız? Kanıta Dayalı Düşünce
+                </TableCell>
+                <TableCell>Yasin Ramazan</TableCell>
+              </TableRow>
+              <TableRow className="rounded-none">
+                <TableCell>İnsan Onuru ve Beden</TableCell>
+                <TableCell>Merve Özaykal</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
+        </div>
+      </div>
+      <h2
+        id="iletisim"
+        className="w-full text-4xl text-center text-white text-shadow-xl font-[900] pt-32"
+      >
+        İletişim
+      </h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 w-full max-w-screen-xl mx-auto gap-12 mt-6 mb-12 bg-white bg-opacity-40 backdrop-blur-xl rounded-[1.5rem] p-4">
+        <div className="flex flex-col gap-4 justify-center pl-12">
+          <div className="flex items-center gap-4">
+            <IoLocationSharp className="text-primary text-2xl w-[48px] h-[48px] md:w-auto md:h-auto" />
+            <span className="text-primary font-[500]">
+              İskender Baba Tekkesi, Ahmediye, Gündoğumu Cd. 48,
+              Üsküdar/İstanbul
+            </span>
+          </div>
+          <a
+            href="mailto:meadenstitu@gmail.com"
+            className="flex items-center gap-4 hover:translate-x-[20px] hover:scale-105 transition-all duration-300"
+          >
+            <IoMail className="text-primary text-2xl" />
+            <span className="text-primary font-[500]">
+              meadenstitu@gmail.com
+            </span>
+          </a>
+          <div className="flex items-center">
+            <span className="text-primary font-[500] ml-[39px]">
+              Herhangi bir sorunuz ya da öneriniz için bize e-posta gönderebilir
+              yahut enstitümüzü ziyaret edebilirsiniz.
+            </span>
+          </div>
+          <div className="flex items-center gap-4 justify-center ">
+            <a
+              href="https://www.instagram.com/meadenstitu/"
+              className="flex items-center justify-center rounded-full w-8 h-8 bg-white text-primary hover:bg-gray-300 transition-all duration-300 border border-primary"
+              target="_blank"
+            >
+              <AiOutlineInstagram className="text-xl" />
+            </a>
+            <a
+              href="https://www.x.com/meadenstitu/"
+              className="flex items-center justify-center rounded-full w-8 h-8 bg-white text-primary hover:bg-gray-300 transition-all duration-300 border border-primary"
+              target="_blank"
+            >
+              <FiTwitter className="text-lg" />
+            </a>
+          </div>
+        </div>
+        <div className="flex items-center justify-center">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3010.288284594468!2d29.01451447665479!3d41.018948471348935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab95df5e720a5%3A0x9f0eedb5b28d0db0!2s%C4%B0skender%20Baba%20Tekkesi!5e0!3m2!1str!2str!4v1724716527911!5m2!1str!2str"
+            width="600"
+            height="450"
+            style={{ border: 0, borderRadius: "1rem" }}
+            allowFullScreen={false}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
       </div>
     </div>

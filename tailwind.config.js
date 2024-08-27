@@ -7,6 +7,7 @@ export default {
     extend: {
       backgroundImage: {
         "landing-bg": "url('/media/images/landing-bg.png')",
+        "landing-bg-1": "url('/media/images/landing-bg1.png')",
         "landing-bg-2": "url('/media/images/landing-bg2.png')",
       },
       textShadow: {
