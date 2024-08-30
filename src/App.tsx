@@ -1,6 +1,6 @@
+import { useState } from "react";
 import {
   Carousel,
-  Popover,
   Table,
   TableBody,
   TableCell,
@@ -9,11 +9,30 @@ import {
   TableRow,
 } from "flowbite-react";
 import "./App.css";
-import { IoMail, IoMenuSharp, IoLocationSharp } from "react-icons/io5";
+import {
+  IoMail,
+  IoMenuSharp,
+  IoCloseSharp,
+  IoLocationSharp,
+} from "react-icons/io5";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { FiTwitter } from "react-icons/fi";
 
 function App() {
+
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLinkClick =
+    (id: string) => (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+      e.preventDefault();
+      smoothScroll(id);
+      setIsMenuOpen(false); // Close menu on link click
+    };
+
   const smoothScroll = (targetId: string) => {
     const target = document.getElementById(targetId);
     if (target) {
@@ -25,19 +44,36 @@ function App() {
     <div
       className={`fixed w-screen h-screen overflow-y-scroll overflow-x-hidden bg-landing-bg-1 bg-cover px-2 md:px-0`}
     >
+      {/* Hamburger Button for Mobile */}
+      <div
+        className={`md:hidden fixed top-8 left-6 flex items-center justify-between z-[100] bg-white bg-opacity-70 p-3 rounded-lg ${
+          isMenuOpen ? "shadow-md" : "shadow-none"
+        }`}
+      >
+        <button
+          id="hamburger"
+          className="text-primary text-2xl"
+          aria-label="Toggle navigation"
+          onClick={toggleMenu}
+        >
+          {isMenuOpen ? <IoCloseSharp /> : <IoMenuSharp />}
+        </button>
+      </div>
+
       <div
         id="navbar"
-        className="hidden md:block fixed top-10 left-1/2 px-[20px] transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl bg-white bg-opacity-20 backdrop-blur-xl shadow-md z-50"
+        className="hidden md:block fixed top-10 left-1/2 px-4 transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl bg-white bg-opacity-20 backdrop-blur-xl shadow-md z-50"
       >
-        <ul className="list-none flex w-full h-full items-center justify-center gap-24 mx-auto text-black">
+        {/* Navigation Links for Desktop */}
+        <ul
+          id="nav-links"
+          className="hidden md:flex w-full h-full items-center justify-center gap-24 mx-auto text-black"
+        >
           <li className="nav-item">
             <a
               href="#insan-akademisi"
               className="relative font-semibold text-xl font-montserrat"
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScroll("insan-akademisi");
-              }}
+              onClick={handleLinkClick("insan-akademisi")}
             >
               İnsan Akademisi
             </a>
@@ -46,10 +82,7 @@ function App() {
             <a
               href="#mufredat"
               className="relative font-semibold text-xl font-montserrat"
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScroll("mufredat");
-              }}
+              onClick={handleLinkClick("mufredat")}
             >
               Müfredat
             </a>
@@ -58,10 +91,7 @@ function App() {
             <a
               href="#basvuru"
               className="relative font-semibold text-xl font-montserrat"
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScroll("basvuru");
-              }}
+              onClick={handleLinkClick("basvuru")}
             >
               Başvuru
             </a>
@@ -70,10 +100,7 @@ function App() {
             <a
               href="#iletisim"
               className="relative font-semibold text-xl font-montserrat"
-              onClick={(e) => {
-                e.preventDefault();
-                smoothScroll("iletisim");
-              }}
+              onClick={handleLinkClick("iletisim")}
             >
               İletişim
             </a>
@@ -81,80 +108,57 @@ function App() {
         </ul>
       </div>
 
-      <div
-        id="navbar-mobile"
-        className="md:hidden fixed top-10 left-1/2 px-[20px] transform -translate-x-1/2 w-full max-w-screen-xl h-[75px] rounded-xl z-50"
+      {/* Mobile Menu */}
+      <ul
+        id="mobile-menu"
+        className={`md:hidden fixed left-1/2 transform -translate-x-1/2 w-full bg-white bg-opacity-80 backdrop-blur-xl shadow-lg z-50 transition-transform ${
+          isMenuOpen ? "translate-y-0" : "-translate-y-full"
+        }`}
       >
-        <div className="flex items-center justify-end w-full h-full px-4">
-          <Popover
-            aria-labelledby="navbar-menu"
-            content={
-              <ul className="list-none  w-full h-full items-center justify-center gap-24 mx-auto text-black">
-                <li className="nav-item">
-                  <a
-                    href="#insan-akademisi"
-                    className="relative font-semibold text-xl font-montserrat"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      smoothScroll("insan-akademisi");
-                    }}
-                  >
-                    İnsan Akademisi
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    href="#mufredat"
-                    className="relative font-semibold text-xl font-montserrat"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      smoothScroll("mufredat");
-                    }}
-                  >
-                    Müfredat
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    href="#basvuru"
-                    className="relative font-semibold text-xl font-montserrat"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      smoothScroll("basvuru");
-                    }}
-                  >
-                    Başvuru
-                  </a>
-                </li>
-                <li className="nav-item">
-                  <a
-                    href="#iletisim"
-                    className="relative font-semibold text-xl font-montserrat"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      smoothScroll("iletisim");
-                    }}
-                  >
-                    İletişim
-                  </a>
-                </li>
-              </ul>
-            }
-            placement="left"
+        <li className="nav-item py-4 text-center">
+          <a
+            href="#insan-akademisi"
+            className="relative font-semibold text-xl font-montserrat"
+            onClick={handleLinkClick("insan-akademisi")}
           >
-            <button className="flex items-center justify-center w-[50px] h-[50px] bg-white rounded-full text-black">
-              <IoMenuSharp className="text-2xl" />
-            </button>
-          </Popover>
-        </div>
-      </div>
+            İnsan Akademisi
+          </a>
+        </li>
+        <li className="nav-item py-4 text-center">
+          <a
+            href="#mufredat"
+            className="relative font-semibold text-xl font-montserrat"
+            onClick={handleLinkClick("mufredat")}
+          >
+            Müfredat
+          </a>
+        </li>
+        <li className="nav-item py-4 text-center">
+          <a
+            href="#basvuru"
+            className="relative font-semibold text-xl font-montserrat"
+            onClick={handleLinkClick("basvuru")}
+          >
+            Başvuru
+          </a>
+        </li>
+        <li className="nav-item py-4 text-center">
+          <a
+            href="#iletisim"
+            className="relative font-semibold text-xl font-montserrat"
+            onClick={handleLinkClick("iletisim")}
+          >
+            İletişim
+          </a>
+        </li>
+      </ul>
 
       <div
         id="landing"
         className="relative w-full max-w-screen-xl h-screen flex flex-col justify-between items-center mx-auto py-12"
       >
         <div></div>
-        <div className="grid grid-cols-2 w-full mt-[110px]">
+        <div className="grid grid-cols-2 w-full mt-[110px] ">
           <div className="hidden md:block">&nbsp;</div>
           <div className="col-span-2 md:col-span-1 flex flex-col gap-4 bg-primary bg-opacity-95 backdrop-blur-sm shadow-md shadow-parimary rounded-xl px-8 p-4">
             <span className="text-3xl text-secondary font-[700]">
@@ -175,7 +179,7 @@ function App() {
             </p>
           </div>
         </div>
-        <div className="flex items-center justify-between w-full h-[75px] bg-chesnut backdrop-blur-sm shadow-md rounded-xl px-[20px]">
+        <div className="flex items-center justify-between w-full h-[75px] bg-chesnut backdrop-blur-sm shadow-md rounded-xl px-[20px] mt-4">
           <div className="flex flex-col">
             <span className="text-md md:text-lg font-semibold text-[#fff0db]">
               İnsan Akademisi Başvuruları Devam Ediyor!
@@ -263,7 +267,7 @@ function App() {
             </Carousel>
           </div>
         </div>
-        <div className="flex flex-col space-y-4 w-full rounded-xl bg-white bg-opacity-40 backdrop-blur-xl text-black font-[500] shadow-md px-8 py-4">
+        <div className="flex flex-col space-y-4 w-full rounded-xl bg-primary bg-opacity-95 backdrop-blur-sm text-secondary font-[500] shadow-md px-8 py-4">
           <p>
             <b>Marifet ve Erdem Araştırmaları Enstitüsü (MEAD)</b> kurulduktan
             sonra böylesi sorulardan hareketle bu programın içeriğini
@@ -303,7 +307,7 @@ function App() {
         >
           Derslerimiz
         </h2>
-        <div className="w-full rounded-xl bg-primary shadow-md overflow-scroll -mt-8">
+        <div className="w-full rounded-xl bg-primary shadow-md overflow-scroll md:overflow-hidden -mt-8">
           <Table className="w-full text-secondary shadow-none bg-transparent">
             <TableHead className="bg-secondary text-primary">
               <TableHeadCell className="bg-transparent">Kademe</TableHeadCell>
@@ -400,6 +404,20 @@ function App() {
             </TableBody>
           </Table>
         </div>
+      </div>
+      <h2
+        id="basvuru"
+        className="w-full text-4xl text-center text-white text-shadow-xl font-[900] pt-32 my-2"
+      >
+        Başvuru
+      </h2>
+      <div className="flex flex-col gap-4 w-full md:w-[700px] max-w-screen-lg mx-auto bg-white bg-opacity-70 backdrop-blur-sm shadow-md rounded-xl">
+        <iframe
+          src="https://docs.google.com/forms/d/e/1FAIpQLSekgJ9iUwryZFPY91xOr49uzynrkvDkHPcVZNoegzHcPwTZbA/viewform?embedded=true"
+          className="w-full h-[800px]"
+        >
+          Yükleniyor…
+        </iframe>
       </div>
       <h2
         id="iletisim"
